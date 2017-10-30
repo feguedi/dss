@@ -1,0 +1,23 @@
+{
+  "name": "dss",
+  "version": "1.0.0",
+  "description": "Proyecto final de la materia de Sistemas de Soporte a la Decisión",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feguedi/first-spa.git"
+  },
+  "author": "Ixe Fernández",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/feguedi/first-spa/issues"
+  },
+  "homepage": "https://github.com/feguedi/first-spa#readme",
+  "dependencies": {
+    "express": "*",
+    "mysql": "*"
+  }
+}
