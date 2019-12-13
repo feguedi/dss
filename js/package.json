@@ -1,23 +1,38 @@
 {
-  "name": "dss",
-  "version": "1.0.0",
-  "description": "Proyecto final de la materia de Sistemas de Soporte a la Decisión",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/feguedi/first-spa.git"
-  },
-  "author": "Ixe Fernández",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/feguedi/first-spa/issues"
-  },
-  "homepage": "https://github.com/feguedi/first-spa#readme",
-  "dependencies": {
-    "express": "*",
-    "mysql": "*"
-  }
+    "name": "dss",
+    "version": "1.0.0",
+    "description": "Proyecto final de la materia de Sistemas de Soporte a la Decisión",
+    "scripts": {
+        "start": "next start",
+        "build": "next build",
+        "dev": "next"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/feguedi/dss.git"
+    },
+    "author": "Ixe Fernández",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/feguedi/dss/issues"
+    },
+    "homepage": "https://github.com/feguedi/dss#readme",
+    "dependencies": {
+        "next": "^9.1.5",
+        "react": "^16.12.0",
+        "react-bootstrap": "^1.0.0-beta.16",
+        "react-dom": "^16.12.0"
+    }
 }
