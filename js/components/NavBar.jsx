@@ -1,17 +1,9 @@
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Nav, Navbar, NavbarBrand } from 'react-bootstrap'
 
 export default () => (
-    <Navbar bg="light" expand="md">
-        <Navbar.Brand href="/">Inicio</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="navbar-ssd">
-            <Nav className="mr-auto">
-                <Nav.Link href="/">Inicio</Nav.Link>
-                <Nav.Link href="/about">Acerca de</Nav.Link>
-                <NavDropdown.Item href="/none">Error 1</NavDropdown.Item>
-                <NavDropdown.Item href="/none">Error 2</NavDropdown.Item>
-                <NavDropdown.Item href="/none">Error 3</NavDropdown.Item>
-            </Nav>
-        </Navbar.Collapse>
+    <Navbar bg="dark" expand="lg" color="light">
+        <NavbarBrand className="mr-auto"><Nav.Link href="/">DSS</Nav.Link></NavbarBrand>
+        <Nav.Item><Nav.Link href="/data">Datos</Nav.Link></Nav.Item>
+        <Nav.Item><Nav.Link href="/about">Acerca de</Nav.Link></Nav.Item>
     </Navbar>
 )
