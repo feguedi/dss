@@ -50,8 +50,8 @@ const Data = ({ dieselData, dollarData }) => (
 )
 
 Data.getInitialProps = async () => {
-    const dieselData = await (await axios.get('http://localhost:3003/diesel')).data
-    const dollarData = await (await axios.get('http://localhost:3003/dollar')).data
+    const dieselData = await (await axios.get(`${ process.env.WEBSERVICE_HOST }/diesel`)).data
+    const dollarData = await (await axios.get(`${ process.env.WEBSERVICE_HOST }/dollar`)).data
     dieselData.forEach(d => {
         const nd = JSON.stringify(d["FECHA"])
         const year = nd.split("-")[0].slice(1, 5)

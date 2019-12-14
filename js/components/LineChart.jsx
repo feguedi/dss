@@ -7,8 +7,9 @@ export default class LineChart extends React.Component {
     }
 
     async getData() {
-        const dataDiesel = await (await axios.get(`http://localhost:3003/diesel`)).data
-        const dataDollar = await (await axios.get(`http://localhost:3003/dollar`)).data
+        console.log(`Solicitando datos a ${ process.env.WEBSERVICE_HOST }/diesel`)
+        const dataDiesel = await (await axios.get(`${ process.env.WEBSERVICE_HOST }/diesel`)).data
+        const dataDollar = await (await axios.get(`${ process.env.WEBSERVICE_HOST }/dollar`)).data
 
         dataDiesel.forEach(d => {
             let nd = new Date(d["FECHA"])
