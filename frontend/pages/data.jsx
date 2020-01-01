@@ -1,58 +1,81 @@
 import Layout from "../components/Layout"
 import LineChart from '../components/LineChart'
+import Error from 'next/error'
 import { Table, Row } from 'react-bootstrap'
 import axios from "axios"
 
-const Data = ({ dieselData, dollarData }) => (
-    <Layout>
-        <Row>
-            <div className="col-12 col-md-6">
-                <h1 className="text-center">Diesel</h1>
-                <Table className="table-lg-responsive table-hover">
-                    <thead className="thead-dark">
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { dieselData.map(obj => (
-                            <tr key={ obj["ID"] }>
-                                <td>{ obj["FECHA"] }</td>
-                                <td>{ obj["PRECIO"] }</td>
+const Data = ({ dieselData, dollarData, errorCode }) => {
+    if (errorCode) 
+        return (
+            <Layout>
+                <Error statusCode={ errorCode } />
+            </Layout> 
+        )
+
+    return (
+        <Layout>
+            <Row>
+                <div className="col-12 col-md-6">
+                    <h1 className="text-center">Diesel</h1>
+                    <Table className="table-lg-responsive table-hover">
+                        <thead className="thead-dark">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Precio</th>
                             </tr>
-                        )) }
-                    </tbody>
-                </Table>
-            </div>
-            <div className="col-12 col-md-6">
-                <h1 className="text-center">Dólar</h1>
-                <Table className="table-lg-responsive table-hover">
-                    <thead className="thead-dark">
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { dollarData.map(obj => (
-                            <tr key={ obj["ID"] }>
-                                <td>{ obj["FECHA"] }</td>
-                                <td>{ obj["MEDIA"] }</td>
+                        </thead>
+                        <tbody>
+                            { dieselData.map(obj => (
+                                <tr key={ obj["ID"] }>
+                                    <td>{ obj["FECHA"] }</td>
+                                    <td>{ obj["PRECIO"] }</td>
+                                </tr>
+                            )) }
+                        </tbody>
+                    </Table>
+                </div>
+                <div className="col-12 col-md-6">
+                    <h1 className="text-center">Dólar</h1>
+                    <Table className="table-lg-responsive table-hover">
+                        <thead className="thead-dark">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Precio</th>
                             </tr>
-                        )) }
-                    </tbody>
-                </Table>
-            </div>
-        </Row>
-        <LineChart />
-    </Layout>
-)
+                        </thead>
+                        <tbody>
+                            { dollarData.map(obj => (
+                                <tr key={ obj["ID"] }>
+                                    <td>{ obj["FECHA"] }</td>
+                                    <td>{ obj["MEDIA"] }</td>
+                                </tr>
+                            )) }
+                        </tbody>
+                    </Table>
+                </div>
+            </Row>
+            <hr />
+            <h4>Hora actual: </h4><p>{ `${Date().getHours()}:${Date().getMinutes()}:${Date().getSeconds()}` }</p>
+            <LineChart dieselData={ dieselData } dollarData={ dollarData } />
+        </Layout>
+    )
+}
 
 Data.getInitialProps = async () => {
-    const dieselData = await (await axios.get(`${ process.env.WEBSERVICE_HOST }/diesel`)).data
-    const dollarData = await (await axios.get(`${ process.env.WEBSERVICE_HOST }/dollar`)).data
+    console.log(`fetching data`)
+    const resDiesel = await axios.get(`${ process.env.WEBSERVICE_HOST }/diesel`)
+    const resDollar = await axios.get(`${ process.env.WEBSERVICE_HOST }/dollar`)
+
+    const errorCodeDiesel = resDiesel.status > 200 ? resDiesel.status : ""
+    const errorCodeDollar = resDollar.status > 200 ? resDollar.status : ""
+    const errorCode = errorCodeDiesel ? errorCodeDiesel : (errorCodeDollar ? errorCodeDollar : "")
+    console.log(`errorCode: ${ errorCode }`)
+
+    const dieselData = resDiesel.data
+    const dollarData = resDollar.data
+    
     dieselData.forEach(d => {
+        console.log(`cambiando fecha de diesel`)
         const nd = JSON.stringify(d["FECHA"])
         const year = nd.split("-")[0].slice(1, 5)
         const month = nd.split("-")[1]
@@ -60,13 +83,19 @@ Data.getInitialProps = async () => {
         d["FECHA"] = `${ day }/${ month }/${ year }`
     })
     dollarData.forEach(d => {
+        console.log(`cambiando fecha de dolar`)
         const nd = JSON.stringify(d["FECHA"])
         const year = nd.split("-")[0].slice(1, 5)
         const month = nd.split("-")[1]
         const day = nd.split("-")[2].slice(0, 2)
         d["FECHA"] = `${ day }/${ month }/${ year }`
     })
+
+    console.log(`dieselData: ${ JSON.stringify(dieselData) }\n`)
+    console.log(`dollarData: ${ JSON.stringify(dollarData) }\n`)
+
     return {
+        errorCode,
         dieselData,
         dollarData
     }

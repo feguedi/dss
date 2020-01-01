@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Proyecto final de la materia de Sistemas de Soporte a la Decisión",
     "scripts": {
-        "start": "next start",
+        "start": "next start -p $PORT",
         "build": "next build",
         "dev": "next"
     },
