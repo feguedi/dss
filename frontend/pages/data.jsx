@@ -55,7 +55,7 @@ const Data = ({ dieselData, dollarData, errorCode }) => {
                 </div>
             </Row>
             <hr />
-            <h4>Hora actual: </h4><p>{ `${Date().getHours()}:${Date().getMinutes()}:${Date().getSeconds()}` }</p>
+            <h4>Hora actual: </h4><p>{ `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` }</p>
             <LineChart dieselData={ dieselData } dollarData={ dollarData } />
         </Layout>
     )
@@ -75,7 +75,6 @@ Data.getInitialProps = async () => {
     const dollarData = resDollar.data
     
     dieselData.forEach(d => {
-        console.log(`cambiando fecha de diesel`)
         const nd = JSON.stringify(d["FECHA"])
         const year = nd.split("-")[0].slice(1, 5)
         const month = nd.split("-")[1]
@@ -83,16 +82,12 @@ Data.getInitialProps = async () => {
         d["FECHA"] = `${ day }/${ month }/${ year }`
     })
     dollarData.forEach(d => {
-        console.log(`cambiando fecha de dolar`)
         const nd = JSON.stringify(d["FECHA"])
         const year = nd.split("-")[0].slice(1, 5)
         const month = nd.split("-")[1]
         const day = nd.split("-")[2].slice(0, 2)
         d["FECHA"] = `${ day }/${ month }/${ year }`
     })
-
-    console.log(`dieselData: ${ JSON.stringify(dieselData) }\n`)
-    console.log(`dollarData: ${ JSON.stringify(dollarData) }\n`)
 
     return {
         errorCode,
